@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Detayı | Özgür Cep Burada</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .detail-container { padding: 80px 0; min-height: 80vh; }
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .detail-img { width: 100%; border-radius: 10px; border: 1px solid #eee; }
+        .detail-info h1 { font-size: 32px; margin-bottom: 20px; }
+        .detail-price { font-size: 36px; font-weight: 800; color: #ff6000; margin-bottom: 25px; }
+        .detail-desc { color: #666; margin-bottom: 30px; line-height: 1.8; }
+        .buy-btn { background: #ff6000; color: white; padding: 20px 40px; border-radius: 10px; font-weight: 700; font-size: 18px; width: 100%; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container detail-container">
+        <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Mağazaya Dön</a>
+        <div id="product-detail-content" class="detail-grid">
+            <p>Ürün bilgileri yükleniyor...</p>
+        </div>
+    </div>
+    <div id="toast-container"></div>
+
+    <script src="../products.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = parseInt(urlParams.get('id'));
+        const product = products.find(p => p.id === productId);
+
+        const content = document.getElementById('product-detail-content');
+
+        if (product) {
+            // Özellikleri liste haline getirelim
+            const specsHtml = Object.entries(product.specs).map(([key, value]) => `
+                <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
+                    <span style="font-weight: 600; color: #333;">${key}:</span>
+                    <span style="color: #666;">${value}</span>
+                </div>
+            `).join('');
+
+            content.innerHTML = `
+                <div><img src="../${product.image}" class="detail-img"></div>
+                <div class="detail-info">
+                    <h1>${product.title}</h1>
+                    <div style="color: #ffc000; margin-bottom: 15px;">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                        <span style="color: #999; font-size: 14px; margin-left: 10px;">(${product.reviewCount} Değerlendirme)</span>
+                    </div>
+                    <div class="detail-price">${product.price.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} TL</div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="font-size: 18px; margin-bottom: 15px; border-bottom: 2px solid #ff6000; display: inline-block;">Ürün Özellikleri</h3>
+                        <div class="specs-list">
+                            ${specsHtml}
+                        </div>
+                    </div>
+
+                    <p class="detail-desc">Bu ürün <strong>Özgür Cep Burada</strong> güvencesiyle satılmaktadır. Yüksek kaliteli malzemeden üretilmiştir ve cihazınızla tam uyumludur. Stokta sınırlı sayıdadır.</p>
+                    <button class="buy-btn" onclick="handleDetailAddToCart('${product.title}')">SEPETE EKLE</button>
+                </div>
+            `;
+        } else {
+            content.innerHTML = `<p style="text-align:center; grid-column: 1/-1;">Ürün bulunamadı. <a href="../index.html">Mağazaya dön</a></p>`;
+        }
+
+        function handleDetailAddToCart(title) {
+            showToast(`${title} sepete eklendi!`, 'success');
+            
+            // Opsiyonel: Sepet verisini localStorage ile senkronize etmek isterseniz buraya ekleyebilirsiniz
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            cart.push({ title: title, price: product.price });
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function showToast(msg, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            toast.innerHTML = `
+                <i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-circle-info'}"></i>
+                <span>${msg}</span>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

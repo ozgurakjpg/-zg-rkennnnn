@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sepetim / Ödeme | Özgür Cep Burada</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container middle-header-content">
+            <a href="../index.html" class="logo">ÖzgürCep<span>Burada</span></a>
+            <nav class="main-nav">
+                <a href="../index.html">Alışverişe Devam Et</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container checkout-page" style="padding: 40px 0;">
+        <div class="checkout-header" style="text-align: center; margin-bottom: 40px;">
+            <h1>Güvenli Ödeme</h1>
+        </div>
+        
+        <div class="checkout-container">
+            <input type="checkbox" id="step1-complete" class="wizard-check">
+            <input type="checkbox" id="step2-complete" class="wizard-check">
+            <input type="checkbox" id="confirm-order" class="wizard-check">
+
+            <div class="checkout-form-section">
+                <!-- Adım 1: İletişim -->
+                <div class="checkout-step step-1">
+                    <div class="form-group-title"><i class="fa-solid fa-user"></i> 1. İletişim Bilgileri</div>
+                    <div class="form-row">
+                        <div class="form-col"><label>Ad Soyad</label><input type="text" placeholder="Adınız Soyadınız"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col"><label>E-posta</label><input type="email" placeholder="E-posta adresiniz"></div>
+                        <div class="form-col"><label>Telefon</label><input type="tel" placeholder="05xx xxx xx xx"></div>
+                    </div>
+                    <label for="step1-complete" class="next-step-btn">Adres Bilgilerine Geç <i class="fa-solid fa-arrow-right"></i></label>
+                </div>
+
+                <!-- Adım 2: Adres -->
+                <div class="checkout-step step-2">
+                    <div class="form-group-title"><i class="fa-solid fa-location-dot"></i> 2. Adres Bilgileri</div>
+                    <div class="form-row">
+                        <div class="form-col"><label>Şehir</label><input type="text" placeholder="Şehir"></div>
+                        <div class="form-col"><label>İlçe</label><input type="text" placeholder="İlçe"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col"><label>Açık Adres</label><input type="text" placeholder="Adres"></div>
+                    </div>
+                    <label for="step2-complete" class="next-step-btn">Ödeme Bilgilerine Geç <i class="fa-solid fa-arrow-right"></i></label>
+                </div>
+
+                <!-- Adım 3: Ödeme -->
+                <div class="checkout-step step-3">
+                    <div class="form-group-title"><i class="fa-solid fa-credit-card"></i> 3. Ödeme Bilgileri</div>
+                    <div class="cc-group">
+                        <div class="form-row">
+                            <div class="form-col"><label>Kart Numarası</label><input type="text" placeholder="0000 0000 0000 0000"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-col"><label>Son Kullanma</label><input type="text" placeholder="AA / YY"></div>
+                            <div class="form-col"><label>CVV</label><input type="password" placeholder="***"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-message">
+                    <i class="fa-solid fa-circle-check" style="font-size: 48px; color: var(--success); margin-bottom: 15px;"></i>
+                    <h2>Siparişiniz Başarıyla Alındı!</h2>
+                    <p>Sipariş numaranız: <strong id="order-no">#OCB-00000</strong></p>
+                    <a href="../index.html" onclick="localStorage.removeItem('cart')" style="display: inline-block; margin-top: 20px; color: var(--primary-color); font-weight: 700;">Alışverişe Devam Et</a>
+                </div>
+            </div>
+
+            <div class="checkout-summary">
+                <div class="summary-title">Sipariş Özeti</div>
+                <div class="cart-items" id="checkout-cart-items"></div>
+                <div class="totals">
+                    <div class="totals-row"><span>Ara Toplam</span><span id="subtotal">0,00 TL</span></div>
+                    <div class="totals-row"><span>Kargo Ücreti</span><span id="shipping-fee">0,00 TL</span></div>
+                    <div class="totals-row grand-total"><span>Ödenecek Tutar</span><span id="grand-total">0,00 TL</span></div>
+                </div>
+                <label for="confirm-order" class="checkout-button">
+                    <span>Siparişi Onayla</span>
+                </label>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast-container"></div>
+    <script src="../script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartUI();
+            
+            const confirmOrderCheck = document.getElementById('confirm-order');
+            if (confirmOrderCheck) {
+                confirmOrderCheck.addEventListener('change', () => {
+                    if (confirmOrderCheck.checked) {
+                        const orderNo = 'OCB-' + (Math.floor(Math.random() * 90000) + 10000);
+                        document.getElementById('order-no').innerText = '#' + orderNo;
+                        showToast('Siparişiniz başarıyla alındı!', 'success');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

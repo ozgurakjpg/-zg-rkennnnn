@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Özgür Cep Burada - Türkiye'nin en büyük telefon aksesuar merkezi.">
+    <title>Özgür Cep Burada | Telefon Aksesuarlarında Lider</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="top-bar">
+            <div class="container top-bar-content">
+                <span class="top-promo"><i class="fa-solid fa-bolt"></i> Günün Fırsatlarını Kaçırmayın!</span>
+                <nav class="top-links">
+                    <a href="pages/takip.html">Sipariş Takibi</a>
+                    <a href="pages/iletisim.html">Müşteri Hizmetleri</a>
+                    <a href="pages/yardim.html">Yardım</a>
+                </nav>
+            </div>
+        </div>
+        <div class="middle-header">
+            <div class="container middle-header-content"><a href="#home" class="logo">ÖzgürCep<span>Burada</span></a>
+                <div class="search-container">
+                    <div class="search-box"><i class="fa-solid fa-search search-icon"></i><input type="text"
+                            placeholder="Kılıf, şarj aleti, kulaklık vb. arayın..."><button
+                            class="search-btn">ARA</button></div>
+                </div>
+                <div class="user-actions">
+                    <a href="pages/login.html" class="action-btn">
+                        <div class="action-icon"><i class="fa-regular fa-user"></i></div>
+                        <div class="action-text"><span class="action-title">Giriş Yap</span><span class="action-sub">veya üye ol</span></div>
+                    </a>
+                    <a href="pages/checkout.html" class="action-btn cart-btn">
+                        <div class="action-icon cart-icon-wrapper"><i class="fa-solid fa-cart-shopping"></i><span class="cart-badge">0</span></div>
+                        <div class="action-text"><span class="action-title">Sepetim</span></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-header">
+            <div class="container">
+                <nav class="main-nav">
+                    <a href="index.html" class="nav-active">Tümü</a>
+                    <a href="pages/kiliflar.html">Telefon Kılıfları</a>
+                    <a href="pages/sarj.html">Şarj Cihazları</a>
+                    <a href="pages/kulakliklar.html">Kulaklıklar</a>
+                    <a href="pages/ekran.html">Ekran Koruyucular</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="views-container">
+        <main id="home" class="page-section container">
+            <section class="hero-section">
+                <div class="hero-banner"><img src="assets/hero_banner.png" alt="Süper Fırsatlar" class="hero-img">
+                    <div class="hero-overlay">
+                        <h2>Premium Aksesuarlarda<br>Yılın En İyi Fırsatı</h2>
+                        <p>%50've varan efsane indirimler başladı!</p><a href="#home" class="hero-btn"
+                            onclick="document.querySelector('.products-section').scrollIntoView({behavior:'smooth'})">Hemen
+                            İncele</a>
+                    </div>
+                </div>
+            </section>
+            <section class="products-section">
+                <div class="section-header">
+                    <h3>Mağazamızdaki Tüm Ürünler</h3><a href="#home" class="view-all">Tümünü Gör <i
+                            class="fa-solid fa-chevron-right"></i></a>
+                </div>
+                <!-- DİNAMİK OLARAK DOLDURULACAK -->
+                <div class="product-grid" data-filter="all">
+                    <div class="loading-products">Ürünler yükleniyor...</div>
+                </div>
+            </section>
+        </main>
+
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container"><p>&copy; 2026 Özgür Cep Burada</p></div>
+    </footer>
+
+    <div id="toast-container"></div>
+    <button id="back-to-top"><i class="fa-solid fa-arrow-up"></i></button>
+    <script src="products.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

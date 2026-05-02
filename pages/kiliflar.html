@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telefon Kılıfları | Özgür Cep Burada</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body data-page="home">
+    <header class="main-header">
+        <div class="top-bar">
+            <div class="container top-bar-content">
+                <span class="top-promo"><i class="fa-solid fa-bolt"></i> Günün Fırsatlarını Kaçırmayın!</span>
+                <nav class="top-links">
+                    <a href="takip.html">Sipariş Takibi</a>
+                    <a href="iletisim.html">Müşteri Hizmetleri</a>
+                    <a href="yardim.html">Yardım</a>
+                </nav>
+            </div>
+        </div>
+        <div class="middle-header">
+            <div class="container middle-header-content">
+                <a href="../index.html" class="logo">ÖzgürCep<span>Burada</span></a>
+                <div class="user-actions">
+                    <a href="login.html" class="action-btn">
+                        <div class="action-icon"><i class="fa-regular fa-user"></i></div>
+                        <div class="action-text"><span class="action-title">Giriş Yap</span></div>
+                    </a>
+                    <a href="checkout.html" class="action-btn cart-btn">
+                        <div class="action-icon cart-icon-wrapper"><i class="fa-solid fa-cart-shopping"></i><span class="cart-badge">0</span></div>
+                        <div class="action-text"><span class="action-title">Sepetim</span></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-header">
+            <div class="container">
+                <nav class="main-nav">
+                    <a href="../index.html">Tümü</a>
+                    <a href="kiliflar.html" class="nav-active">Telefon Kılıfları</a>
+                    <a href="sarj.html">Şarj Cihazları</a>
+                    <a href="kulakliklar.html">Kulaklıklar</a>
+                    <a href="ekran.html">Ekran Koruyucular</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 40px 0;">
+        <div class="section-header">
+            <h2>Telefon Kılıfları</h2>
+        </div>
+        <div class="product-grid" id="category-grid">
+            <!-- JS ile dolacak -->
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container"><p>&copy; 2026 Özgür Cep Burada</p></div>
+    </footer>
+
+    <div id="toast-container"></div>
+    <script src="../products.js"></script>
+    <script src="../script.js"></script>
+    <script>
+        // Sayfa yüklendiğinde sadece kılıfları göster
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('category-grid');
+            const kiliflar = products.filter(p => p.category === 'kilif');
+            
+            // script.js'deki renderProducts fonksiyonunu kullanamayız çünkü o sabit bir ID'ye bakıyor.
+            // Ama products.js yüklü olduğu için manuel render edebiliriz.
+            grid.innerHTML = kiliflar.map(p => `
+                <div class="product-card">
+                    <button class="fav-btn"><i class="fa-regular fa-heart"></i></button>
+                    <a href="urun-detay.html?id=${p.id}" target="_blank" class="product-link-wrapper">
+                        <div class="product-img-wrapper"><img src="../${p.image}" class="product-img"></div>
+                        <div class="product-details">
+                            <div class="product-brand">${p.brand}</div>
+                            <h4 class="product-title">${p.title}</h4>
+                            <div class="product-price">${p.price.toLocaleString('tr-TR')} TL</div>
+                        </div>
+                    </a>
+                    <div class="hover-action">
+                        <button class="add-to-cart-btn" onclick="handleAddToCart(${p.id})"><span>Sepete Ekle</span></button>
+                    </div>
+                </div>
+            `).join('');
+            
+            updateCartUI(); // Sepet sayısını güncelle
+        });
+    </script>
+</body>
+</html>
